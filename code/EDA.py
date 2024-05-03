@@ -1,8 +1,8 @@
 # import necessary modules
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import numpy as np
 
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
@@ -17,7 +17,7 @@ from tensorflow.keras.layers import Dense
 ### DATA-Preprocessing & EDA Code
 
 # load data
-df = pd.read_csv("~/Desktop/final/diamonds.csv") 
+df = pd.read_csv("~/ECS171_G21_FINAL/diamonds.csv") 
 df = df.iloc[:, 1:]               # remove index column
 # df.head()
 
