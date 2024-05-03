@@ -54,7 +54,7 @@ plt.show()
 ### ----------------------------------------------------------------------------
 
 ### Correlation Matrix between continous predictors and Y
-correlation_matrix = df.corr()
+correlation_matrix = df.corr(numeric_only=True)
 plt.figure(figsize=(8, 6))
 sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=0.5)
 plt.title('Correlation Heatmap of Continuous Features')
