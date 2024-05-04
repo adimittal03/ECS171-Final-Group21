@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
@@ -17,7 +18,11 @@ from tensorflow.keras.layers import Dense
 ### DATA-Preprocessing & EDA Code
 
 # load data
-df = pd.read_csv("~/ECS171_G21_FINAL/diamonds.csv") 
+current_directory = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_directory)
+os.chdir(parent_dir)
+print(parent_dir)
+df = pd.read_csv("diamonds.csv") 
 df = df.iloc[:, 1:]               # remove index column
 # df.head()
 
