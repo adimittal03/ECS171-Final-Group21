@@ -9,13 +9,14 @@
 \usepackage{natbib}
 \usepackage{float}
 \usepackage{xcolor}
+\bibliographystyle{plainnat}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
 \title{Machine Learning Approaches for Accurate Diamond Price Prediction\\
 % {\footnotesize ECS-171 Final Project: \textbf{Group 21}}
-\thanks{Final Project Report for ECS 171 - Group 21}
+\thanks{Final Project Report ECS-171: \textbf{Group 21}}
 }
 
 \author{
@@ -62,54 +63,45 @@ Diamond pricing, machine learning, predictive modeling, neural network, decision
 
 \section{Introduction}
 
-In 2023, the jewelry market in the United States was estimated to be worth 73.32 billion USD, with projections for 2024 reaching 96.61 billion USD \cite{a3}. Clearly, the market for jewelry is quite significant and continues to display steady growth. In particular, \emph{diamonds} account for a significant portion of this market, covering an estimated 50-60\% market share as compared to other precious stones such as gold, silver, etc \cite{a4}. Consequently, it becomes important for jewelers to adopt accurate methods to predict prices of these diamonds to better serve their consumers. In fact, businesses have began educating their sellers on essential qualities such as cut, color, carat weight, and clarity to make informed pricing decisions. As such, ensuring accurate price predictions becomes very important as it has significant financial implications on both businesses and consumers alike.
+In 2023, the jewelry market in the United States was estimated to be worth 73.32 billion USD, with projections for 2024 reaching 96.61 billion USD \cite{us}. Clearly, the market for jewelry is quite significant and continues to display steady growth. In particular, \emph{diamonds} account for a significant portion of this market, covering an estimated 50-60\% market share as compared to some of the other precious stones such as gold, silver, etc \cite{diamond}. Consequently, it becomes important for jewelers to adopt accurate methods to predict prices of these diamonds to better serve their consumers. In fact, businesses have began educating their sellers on essential qualities such as cut, color, carat weight, and clarity to make informed pricing decisions. As such, ensuring accurate price predictions becomes very important as it has significant financial implications on both businesses and consumers alike.
 
-Given the importance of this task, it becomes crucial to develop methods that enable accurate prediction of prices for these diamonds. Machine learning, with its ability to learn patterns in data and make predictions, has become extremely popular in recent years across a wide range of applications \cite{a1}. Recent advancements in machine learning have introduced a range of algorithms, including linear regression, K-Nearest Neighbors, Random Forests, and the increasingly popular neural networks \cite{c1}. In this paper, we explore several different machine learning algorithms to accurately predict diamond prices based on several characteristics, including those mentioned above. The application of these predictions is widespread, as it can aid jewelers and marketers who aim to provide accurate pricing for consumers in the jewelry market.
+Given the importance of this task, it becomes crucial to develop methods that enable accurate prediction of prices for these diamonds. Machine learning, with its ability to learn patterns in data and generate predictions, has become extremely popular in recent years across a wide range of applications \cite{kino}. Recent advancements in machine learning have introduced a range of algorithms, including linear regression, K-Nearest Neighbors, Random Forests, and the increasingly popular neural networks \cite{sarker}. In this paper, we explore several different machine learning algorithms to accurately predict diamond prices based on their given characteristics, including those mentioned above. The application of creating models to generate accurate predictions is widespread, as it can aid jewelers and marketers who aim to provide accurate pricing methods for consumers in the jewelry market.
 
-Our dataset contains several essential features for diamond price prediction, such as the aforementioned carat, cut, color, clarity, etc \cite{a2}. Through exploratory data analysis (EDA), we aim to understand how these features relate to diamond prices. This analysis will help us answer questions about which features most significantly impact diamond prices and how we can leverage this information to create predictive models. Thus, our goal is to develop an accurate model for predicting diamond prices, enabling jewelers to make precise pricing decisions and enhancing the consumer purchasing experience. This paper details our methodology, including EDA and the application of various machine learning algorithms, to achieve this objective.
+Our dataset contains several essential features for diamond price prediction, such as the aforementioned carat, cut, color, clarity, etc. \cite{kaggle} Through exploratory data analysis (EDA), we aim to understand how these features are related to diamond pricing. This analysis will help us answer questions about which features most significantly impact diamond prices and ways we can leverage this information to create accurate predictive models. Ultimately, our goal is to develop an accurate model for predicting diamond prices, enabling jewelers to make precise pricing decisions and improving the overall consumer purchasing experience. This paper details our methodology, including EDA and the application of various machine learning algorithms, to achieve this objective.
 
-The outline of this paper is as follows: Section 2 discusses the historical perspective of machine learning and relevant algorithms as part of the literature review. Section 3 presents data description and exploratory data analysis. Sections 4 and 5 discuss the proposed methodology and results. Finally, the paper concludes with a discussion and future perspective in Section 6.
+The outline of this paper is as follows: Section 2 reviews the related literature on diamond price prediction and provides a historical perspective on machine learning and relevant algorithms. Section 3 presents data description and exploratory data analysis. Sections 4 and 5 highlight the proposed methodology and results. Finally, the paper concludes with a discussion and future perspective in Section 6.
 
 \section{Literature Review}
 
-Machine learning is a rapidly developing field with a diverse range of algorithms tailored for various tasks. This section details important concepts surrounding the ML algorithms we will use. In particular, we discuss the historical context \& purpose of regression models, decision trees, and neural networks.
+Much literature has been published to develop predictive models for accurately estimating diamond prices, using various social contexts and individual diamond characteristics. Alsuraihi et al. \cite{Alsuraihi} aimed to develop an accurate algorithm to estimate diamond prices. They considered various features such as diamond sizes and other key factors. Various machine learning methods were tested, including Linear Regression, Random Forest Regression, Polynomial Regression, Gradient Descent, and Neural Networks. Similarly, Mamonov and Triantoro \cite{Mamonov} studied the relationship between a diamond's physical attributes and respective prices in e-commerce contexts, with the goal of understanding how these attributes affect diamond prices. However, their study did not account for the diamond cut, a significant factor affecting market value, which is included in our dataset. Pandey et al. \cite{Pandey} addressed the challenge of forecasting future values of precious metals like gold and diamonds. They used ensemble approaches combined with feature selection techniques to enhance prediction accuracy. In an alternate perspective, Scott and Yelowitz \cite{Scott} investigated diamond prices in the context its social status and intrinsic value. They collected data from online diamond sellers and empirically examined factors influencing diamond prices, considering carat weight, color, cut, and clarity in determining the logarithm of price. Clearly, a variety of approaches have been taken to create accurate prediction models, ranging from investigating social contexts to individual characteristics. In this paper, we utilize several algorithms to create accurate models ourselves. The latter half of this section provides an overview of key machine learning algorithms of this paper, including regression models, decision trees, and artificial neural networks. We examine the Grid Search method for hyperparameter tuning.
 
-\subsection{Linear Regression} 
+\subsection{Linear Regression}
 
-The most basic prediction model we explore is linear regression. This model fits a straight line between the response variable and its predictors, making it extremely simple and interpretable in terms of estimating the regression coefficients \cite{b10}. One major benefit of linear regression, compared to more complex models, is its efficiency and ease of interpretation, especially when the relationship between the dependent variable $Y$ and the independent variable(s) $X$ is approximately linear. For a single predictor $X$, the general form of a linear regression model is:
-
-\[
-    Y = \beta_0 + \beta_1 X + \epsilon
-\]
-
-Here, $\beta_0$ represents the intercept term, $\beta_1$ is the coefficient for X, and $\epsilon_1 \sim \mathcal{N}(0,\sigma_1^2)$. Note that $\epsilon_1$ is independent of the other predictor terms. Linear regression relies on several key assumptions, including linearity, independence, homoscedasticity, and normality of residuals \cite{b8}. The performance of a linear regression model can be evaluated using metrics such as $R^2$ and Mean Squared Error (MSE). Linear regression can be extended to more complex models, such as multiple linear regression, polynomial regression, and regularization methods (e.g., Ridge and Lasso regression) to handle more complex relationships and preventing overfitting.
-
-A crucial part of linear regression is the minimization of the Residual Sum of Squares (RSS). The RSS measures the discrepancy between the observed data and the values predicted by the model:
+Linear regression is one of the simplest and most interpretable prediction models. It fits a straight line between the response variable $Y$ and predictors $X$. The goal of this model is to minimize the Residual Sum of Squares (RSS) \cite{Seber}:
 
 \[
-    \text{RSS} = \sum_{i=1}^n (y_i - \hat{y}_i)^2
+\text{RSS} = \sum_{i=1}^n (y_i - \hat{y}_i)^2
 \]
 
-Minimizing the RSS through Ordinary Least Squares (OLS) provides the best-fitting line by ensuring the smallest possible error in predicting the response variable from the predictors. For further details on the mathematical foundations of OLS and RSS minimization, refer to Seber and Lee's comprehensive discussion on linear regression \cite{b9}. Linear regression has been extensively studied and applied across various fields \cite{b1, b2}. Additionally, Kutner et al. provide detailed discussions on the statistical assumptions, limitations, and diagnostics of linear regression models \cite{b8}.
+Linear regression assumes linearity, independence, homoscedasticity, and normality of residuals \cite{Kutner}. It is evaluated using metrics like $R^2$ and Mean Squared Error (MSE). Extensions include multiple linear regression, polynomial regression, and regularization methods like Ridge and Lasso regression to handle complex relationships and prevent overfitting \cite{Wright, Weisberg}.
 
-\subsection{Decision Trees} 
+\subsection{Decision Trees}
 
-The second major algorithm we review is decision trees. Decision trees are powerful tools for classification and regression tasks, especially with tabular data. These algorithms split the data into subsets based on the value of input features, creating a tree-like model of decisions. Decision trees can be prone to overfitting; however, ensemble methods such as Random Forests (Breiman, 2001) and Gradient Boosting Machines like XGBoost (Chen \& Guestrin, 2016) mitigate this issue by combining multiple trees to improve performance and robustness. Random forests, introduced by Breiman (2001), create a "forest" of multiple decision trees and aggregate their predictions. This method reduces variance and improves generalization by averaging multiple models . XGBoost, a popular implementation of gradient boosting, has been shown to deliver state-of-the-art performance in many machine learning competitions due to its efficiency and scalability.
-
-Despite being recently popularized by the rise of AI applications, neural networks are actually a historical concept developed in the early 1980s. It resurgence was sparked by the rise of deep learning, with advancements in computational power to handle larger datasets.
+Decision trees are very effective on tabular data, as it displays strong performance on both regression and classification tasks. These models split the data based on feature values, forming a tree-like structure. In particular, decision trees are prone to overfitting. Ensemble methods, such as Random Forests \cite{Breiman} and Gradient Boosting Machines like XGBoost \cite{Chen}, mitigate this issue by combining multiple trees, thereby enhancing performance and robustness.
 
 \subsection{Neural Networks}
 
-The foundation of modern neural networks was laid by the introduction of backpropagation by Rumelhart, Hinton, and Williams (1986) . Recently, deep learning has revolutionized fields such as image recognition, natural language processing, and game playing. LeCun, Bengio, and Hinton (2015) provide a seminal review on the principles and advancements in deep learning. A neural network contains many hyperparameters, and there are several elements to finding the best set of such values. Grid search is a systematic approach for hyperparameter tuning, where a predefined set of hyperparameters is evaluated exhaustively to identify the optimal configuration for a machine learning model. Bergstra and Bengio (2012) introduced grid search as a fundamental method for hyperparameter optimization. They highlighted its importance in efficiently exploring the hyperparameter space and provided insights into its limitations, such as scalability and computational cost. For a comprehensive discussion on hyperparameter optimization techniques, see the review by Loshchilov and Hutter (2019).
+Neural networks have recently become extremely popular with advances in deep learning and computation ability to handle big data problems \cite{LeCun}. These models consist of layers of interconnected nodes (neurons) that learn representations from data. Rumelhart et. al \cite{Rumelhart} introduced the backpropagation algorithm in order to learn the model weights by minimizing the training loss. Modern neural networks use optimizers like Adam (Adaptive Moment Estimation), which combines adaptive learning rates and momentum for efficient training.
 
-The Adam optimizer, short for Adaptive Moment Estimation, is a widely used optimization algorithm for training deep neural networks. It combines the advantages of both adaptive learning rate methods and momentum-based optimization techniques, offering fast convergence and robustness to noisy gradients. Kingma and Ba (2014) introduced the Adam optimizer, presenting it as an extension of the stochastic gradient descent with adaptive learning rates. They demonstrated its effectiveness in training deep learning models across various tasks, including image classification, natural language processing, and reinforcement learning. Adam maintains adaptive learning rates for each parameter by computing individual learning rates based on the first and second moments of the gradients. This adaptive behavior allows Adam to automatically adjust the learning rate during training, leading to improved convergence and generalization performance.
+\subsection{Grid Search}
 
-In conclusion, grid search and the Adam optimizer are essential components of the machine learning and deep learning toolkit. While grid search provides a systematic approach for hyperparameter tuning, Adam offers an efficient optimization algorithm for training deep neural networks. Understanding their strengths, limitations, and best practices is crucial for effectively applying these techniques in practical scenarios.
+Both Neural Networks and decision trees include a variety of hyperparameters that significantly impact their performance and overall generalization ability on unseen data. Grid search is a method for hyperparameter tuning that evaluates a predefined set (grid) of hyperparameters and finds the optimal configuration among them. This method is quite computationally heavy, as it explore every configuration among the given hyperparameter space to identify the most suitable combination for a given problem. Bergstra and Bengio (2012) \cite{Bergstra} discussed grid search's efficiency and limitations, highlighting its importance in fine-tuning machine learning models for optimal performance.
 
+Therefore, our literature review provides an overview of the research conducted on predicting diamond prices, including discussions on pertinent algorithms such as linear regression, decision trees, and neural networks. For hyperparameter tuning, we plan to utilize Grid Search to optimize the performance of both the decision trees and neural network models.
 
 \section{Dataset Description and Exploratory Data Analysis}
 
-The \emph{diamond prices} dataset contains detailed information about 54,000 diamonds, including their prices and various characteristics \cite{a2}. The predictor variables in this dataset are as follows: i) \textbf{Carat}: Represents the weight of the diamond, ranging from 0.2 to 5.01 carats. ii) \textbf{Cut Quality}: Categorized as Fair, Good, Very Good, Premium, or Ideal, indicating the craftsmanship involved in shaping the diamond. iii) \textbf{Color}: Graded from J (worst) to D (best), reflecting the hue and saturation of the stone. iv) \textbf{Clarity}: Measures how clear the diamond is, with grades ranging from I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, to IF (best). v) \textbf{Dimensions}: Captured by the length (x), width (y), and depth (z) in millimeters, with ranges of 0–10.74 mm, 0–58.9 mm, and 0–31.8 mm, respectively. vi) \textbf{Depth Percentage}: Ranges from 43\% to 79\%. vii) \textbf{Table}: Represents the width of the top of the diamond relative to its widest point, ranging from 43\% to 95\%. The dataset does not contain any missing values, so we do not need to address missing data in the exploratory data analysis step.
+The \emph{diamond prices} dataset contains detailed information about 54,000 diamonds, including their prices and various characteristics \cite{kaggle}. The predictor variables in this dataset are as follows: i) \textbf{Carat}: Represents the weight of the diamond, ranging from 0.2 to 5.01 carats. ii) \textbf{Cut Quality}: Categorized as Fair, Good, Very Good, Premium, or Ideal, indicating the craftsmanship involved in shaping the diamond. iii) \textbf{Color}: Graded from J (worst) to D (best), reflecting the hue and saturation of the stone. iv) \textbf{Clarity}: Measures how clear the diamond is, with grades ranging from I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, to IF (best). v) \textbf{Dimensions}: Captured by the length (x), width (y), and depth (z) in millimeters, with ranges of 0–10.74 mm, 0–58.9 mm, and 0–31.8 mm, respectively. vi) \textbf{Depth Percentage}: Ranges from 43\% to 79\%. vii) \textbf{Table}: Represents the width of the top of the diamond relative to its widest point, ranging from 43\% to 95\%. The dataset does not contain any missing values, so we do not need to any address missing data in the exploratory data analysis step.
 
 \subsection{Exploratory Data Analysis}
 
@@ -118,11 +110,11 @@ To explore the dataset further and understand the relationships between these fe
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{Figure_1.png}
-    \caption{Distribution Plot of Continuous Features. Reveals trends in data such as skewness, location of outliers, etc.}
+    \caption{Distribution Plot of Continuous Features. Identify trends our dataset such as skewness, location of outliers, mean, median, scale, etc.}
     \label{fig:image_label}
 \end{figure}
 
-The distribution of continuous predictors highlight potential skewness in our dataset. For instance, the predictor \emph{carat} suggests potential skewness to the right – with many upper outliers – as evidenced by its distribution plot. This trend holds true for features \emph{y} and \emph{z} as well. These plots suggest that our dataset may contain a significant number of upper outliers, which we will consider removing in the data pre-processing stage. To further gain insight on the distribution of our features, the table below summarizes the mean, median, and standard deviation of the continuous features:
+The distribution of continuous predictors highlight potential skewness in our dataset. For instance, the predictor \emph{carat} suggests potential skewness to the right – with many upper outliers – as evidenced by its distribution plot. This trend holds true for features \emph{y} and \emph{z} as well. These plots suggest that our dataset may contain a significant number of upper outliers, which we will consider removing in the data pre-processing stage. To further gain insight on the distribution of our continuous features, the table below summarizes the mean, median, and standard deviation of the each predictor:
 
 \begin{table}[H]
     \centering
@@ -147,7 +139,7 @@ The distribution of continuous predictors highlight potential skewness in our da
     \end{tabular}
 \end{table}
 
-From our table, we can observe that the mean and median values for most features are relatively close, indicating that the data distributions may not actually be as heavily skewed for most variables. However, the standard deviation values highlight the variability within each feature, such as carat and dimensions (x, y, z), display considerable spread. This variability and potential skewness, especially in the carat feature from the plots, could influence our predictive algorithms. Next, we will create pairwise scatter-plots to identify trends between diamond prices and the features.
+From our table, we can observe that the mean and median values for most features are relatively close, indicating that the data distributions may not actually be as heavily skewed for most variables. However, the standard deviation values highlight the variability within each feature, such as carat and dimensions (x, y, z), display considerable spread. This variability and potential skewness (from the plots), especially in the carat feature from the plots, could influence our predictive algorithms. Next, we will create pairwise scatter-plots to identify trends between diamond prices and the features.
 
 \begin{figure}[H]
     \centering
@@ -206,23 +198,132 @@ Next, to standardize our data and balance the scale of our features, we applied 
     \label{fig:boxplots}
 \end{figure}
 
-The boxplots indicate that outliers were removed for carat, while several other features such as depth and table still exhibit upper values. Since these features are not highly correlated with our response variable, we decided to keep them as is and proceed with this cleaned version of the dataset.
+The boxplots indicate that outliers were removed for carat, while several other features such as depth and table still exhibit upper values. Since these features are not highly correlated with our response variable, we decided to keep them as is and proceed with this cleaned version of the dataset. 
 
 \section{Proposed methodology}
 
-In this paper, we explore the predictive capabilities of several machine learning algorithms, ranging from linear regression and polynomial regression to decision trees and artificial neural networks. Our approach involves multiple steps to build and evaluate models that can accurately predict diamond prices based on various features.
+In this paper, we will explore the predictive capabilities of several machine learning algorithms, ranging from linear regression, decision trees, and artificial neural networks. Our approach involved several steps to develop and evaluate model performance to choose the most accurate algorithm. Data preprocessing has already been completed as described above.
 
-We begin with traditional linear regression to fit a straight-line model between diamond prices and the aforementioned features. This initial step helps us gain intuition about the relationship between the features and diamond prices using a simple model. Recognizing that the price exhibited a quadratic relationship with carat and diamond dimensions, we extend our analysis to polynomial regression by including squared terms of these features. This allows us to capture potential nonlinear relationships and assess whether polynomial regression outperforms traditional linear regression.
+\subsection{Linear Regression}
 
-For decision tree-based models, we employ two powerful algorithms: Random Forests and XGBoost. Random Forests aggregate the predictions of multiple decision trees to enhance accuracy and reduce overfitting. XGBoost, a gradient boosting algorithm, further refines predictions by optimizing the model iteratively to minimize errors. These models are well-suited for capturing complex interactions between features and are expected to perform robustly on our dataset.
+We begin with linear regression model to fit a straight-line model between diamond prices and the aforementioned features. This initial step helps us gain intuition about the relationship between the features and diamond prices using a simple model. From our EDA step, since price displayed a quadratic relationship with carat and diamond dimensions (x,y,z), we also test the performance of a polynomial regression model by including squared terms of these respective features. Thus, we can capture potential nonlinear relationships and assess whether polynomial regression outperforms traditional linear regression.
 
-Finally, we explore the use of artificial neural networks (ANNs) for generating predictions. To optimize our ANN, we conduct a grid search for hyperparameter tuning, ensuring we select the best set of parameters for our model. Our neural network architecture consists of a 3-layer ANN with 64 neurons in the first hidden layer, using the ReLU activation function. The output layer also employs the ReLU activation function, as our task involves regression.
+\subsection{Decision Trees} 
 
-To evaluate the performance of our models, we will compare their results using several metrics, including Mean Squared Error (MSE), Mean Absolute Error (MAE), and R-squared (R²). These metrics will help us determine the accuracy and reliability of each model on testing data. By comparing these measures, we aim to identify the most effective algorithm for predicting diamond prices, providing valuable insights for jewelers and marketers in the industry.
+For decision tree-based models, we employ two algorithms; Random Forests and XGBoost. Random Forests aggregate the predictions of multiple decision trees to enhance accuracy and reduce overfitting; XGBoost is a gradient boosting algorithm that iteratively optimizes the model to minimize overall error. We implement grid search with a 5-fold cross-validation to identify the optimal set of hyperparameters. These are the following set of hyper-parameters we tested: 
 
-Through this comprehensive methodology, we seek to develop an accurate and robust model for predicting diamond prices, leveraging the strengths of various machine learning techniques to achieve the best possible performance.
+\begin{itemize}
+    \item \textbf{Random Forests}: Our parameter grid explores options for 'bootstrap' (set to True), 'max\_features' ('auto' and 'sqrt'), 'max\_depth' (None, 10, and 20), 'min\_samples\_leaf' (1 and 2), 'min\_samples\_split' (2 and 5), and 'n\_estimators' (100, 200, and 300).
+    \item \textbf{XGBoost}: We examine hyperparameters such as 'max\_depth' (3, 6, and 9), 'learning\_rate' (0.1 and 0.01), 'n\_estimators' (100, 200, and 300), 'subsample' (0.8 and 1.0), 'colsample\_bytree' (0.8 and 1.0), 'gamma' (0 and 0.1), 'reg\_alpha' (0 and 0.1), and 'reg\_lambda' (0 and 0.1).
+\end{itemize}
+
+This broad range of values for each hyperparameter enables us to explore a wide array of model configurations and identify the optimal combination for our dataset. Subsequently, we train the model using this set of hyperparameters on the training data and assess its performance on the testing set. The plot of training and testing loss vs.\ epoch is provided to demonstrate model performance.
+
+\subsection{Artificial Neural Networks}
+
+In our exploration of predicting diamond prices, we employ artificial neural networks (ANNs). Our ANN architecture consists of a single hidden layer with ReLU activation, followed by an output layer also utilizing ReLU activation, as our task involves regression. To optimize the performance of our ANN, we conduct a grid search for hyperparameter tuning, aiming to select the most suitable parameters for our model. We explore the following hyperparameters during grid search with a 5-fold cross-validation procedure. We explore the following set of hyperparameters:
+
+\begin{itemize}
+    \item 'learning\_rate' (0.001, 0.0001)
+    \item 'momentum' (0.5, 0.9)
+    \item 'number of neurons in hidden layer' (16, 32, 64)
+    \item 'dropout\_rate' (None, 0.2, 0.3)
+    \item 'batch\_size' (256, 512, 1028)
+\end{itemize}
+
+By evaluating these hyperparameters, we will to identify the optimal configuration of hyperparameters that maximizes the predictive performance of our ANN model on the given dataset. Additionally, we incorporate the Adam optimizer into our ANN model to further improve the training process and overall predictive accuracy.
+
+
+\subsection{Evaluating Model Performance}
+
+In our grid search, we will use the \emph{negative mean squared error} as our metric to identify the optimal set of hyperparameters for both decision trees and the artificial neural network. To assess the performance of our models on the testing data, we will compare their results using several metrics, including Mean Squared Error (MSE), Mean Absolute Error (MAE), and R-squared ($R^2$) between the true values and our predictions. These metrics will help evaluating the accuracy and fit of each algorithm on the testing data. By analyzing these measures, our goal is to find the most effective algorithm for predicting diamond prices as it offers valuable insights for jewelers and marketers in the industry. Through this methodology, we will develop an accurate for predicting diamond prices, leveraging the strengths of various machine learning techniques and achieve best performance possible.
 
 \section{Experimental results and evaluation}
+
+Our experimental methodology provides nuanced results across each of the machine learning algorithms. In particular, the results are as follows:
+
+\subsection{Linear \& Polynomial Regression}
+
+In terms of our training data, we tested the effectivness of both linear and polynomial regression models on our training data using 5-Fold Cross validation. Based on the results, this was our mean score error on training data:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Column 1 & Column 2 & Column 3 \\
+\hline
+Row 1 & Cell 1 & Cell 2 \\
+Row 2 & Cell 3 & Cell 4 \\
+Row 3 & Cell 5 & Cell 6 \\
+Row 4 & Cell 7 & Cell 8 \\
+\hline
+\end{tabular}
+\caption{A simple table with 3 columns and 4 rows.}
+\label{tab:mytable}
+\end{table}
+
+
+\subsection{Decision Trees}
+
+\textbf{Random Forest Algorthm}
+
+For our decision tree algorirhtms, the results of grid searhc provided the following best set of hyperpatemrs for our random forest algorhtm.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Column 1 & Column 2 & Column 3 \\
+\hline
+Row 1 & Cell 1 & Cell 2 \\
+Row 2 & Cell 3 & Cell 4 \\
+Row 3 & Cell 5 & Cell 6 \\
+Row 4 & Cell 7 & Cell 8 \\
+\hline
+\end{tabular}
+\caption{A simple table with 3 columns and 4 rows.}
+\label{tab:mytable}
+\end{table}
+
+\textbf{XGBoost} 
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Column 1 & Column 2 & Column 3 \\
+\hline
+Row 1 & Cell 1 & Cell 2 \\
+Row 2 & Cell 3 & Cell 4 \\
+Row 3 & Cell 5 & Cell 6 \\
+Row 4 & Cell 7 & Cell 8 \\
+\hline
+\end{tabular}
+\caption{A simple table with 3 columns and 4 rows.}
+\label{tab:mytable}
+\end{table}
+
+\subsection{Neural Network}
+
+The grid search for neural network presents the following results: 
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Column 1 & Column 2 & Column 3 \\
+\hline
+Row 1 & Cell 1 & Cell 2 \\
+Row 2 & Cell 3 & Cell 4 \\
+Row 3 & Cell 5 & Cell 6 \\
+Row 4 & Cell 7 & Cell 8 \\
+\hline
+\end{tabular}
+\caption{A simple table with 3 columns and 4 rows.}
+\label{tab:mytable}
+\end{table}
+
+\subsection{Comparison of models on testing data}
 
 \section{Conclusion}
 
@@ -233,27 +334,25 @@ Our findings suggest that leveraging these advanced models can provide jewelers 
 By adopting robust machine learning methodologies, the diamond industry can benefit from more precise pricing strategies, ultimately leading to improved market efficiency and customer satisfaction.
 
 \begin{thebibliography}{00}
-\bibitem{a1} Kino, S., Hsu, Y.-T., Shiba, K., Chien, Y.-S., Mita, C., Kawachi, I., and Daoud, A. (2021). A scoping review on the use of machine learning in research on social determinants of health: Trends and research prospects. SSM - Population Health, 15, 100836.
-\bibitem{c1} Sarker, I.H. Machine Learning: Algorithms, Real-World Applications and Research Directions. SN COMPUT. SCI. 2, 160 (2021). https://doi.org/10.1007/s42979-021-00592-x
-\bibitem{a2} Agrawal, S. (2017a, May 25). Diamonds. Kaggle. https://www.kaggle.com/datasets/shivam2503/diamonds 
-\bibitem{a3} U.S. jewelry market size and share: Industry Report, 2030. U.S. Jewelry Market Size And Share | Industry Report, 2030. (n.d.). https://www.grandviewresearch.com/industry-analysis/us-jewelry-market-report 
-\bibitem{a4} Diamond Jewelry Market Size \& Share Analysis Report, 2030. (n.d.). https://www.grandviewresearch.com/industry-analysis/diamond-jewelry-market-report 
-\bibitem{b1} Weisberg, S. (2005). Applied Linear Regression. Wiley.
-\bibitem{b2} Chatterjee, S., \& Hadi, A. S. (2015). Regression Analysis by Example. Wiley.
-\bibitem{b3} Breiman, L. (2001). Random Forests. Machine Learning, 45(1), 5-32.
-\bibitem{b4} Chen, T., \& Guestrin, C. (2016). XGBoost: A Scalable Tree Boosting System. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (pp. 785-794).
-\bibitem{b5} Rumelhart, D. E., Hinton, G. E., \& Williams, R. J. (1986). Learning representations by back-propagating errors. Nature, 323(6088), 533-536.
-\bibitem{b6} LeCun, Y., Bengio, Y., \& Hinton, G. (2015). Deep learning. Nature, 521(7553), 436-444.
-\bibitem{b7}Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., \& Polosukhin, I. (2017). Attention is all you need. In Advances in Neural Information Processing Systems (pp. 5998-6008).
-\bibitem{b8}Michael Kutner, Christopher Nachtsheim, John Neter, and William Li. Applied Linear Statistical Models. 1974.
-\bibitem{b9}Seber, G. A. F., \& Lee, A. J. (2012). Linear Regression Analysis. Hoboken, NJ: John Wiley \& Sons. 
-\bibitem{b10} Wright, John T. "Linear Regression Analysis." British Medical Journal, vol. 310, no. 6977, 1995, pp. 1120-1124. BMJ Group
+\bibitem{kino} Kino, S., Hsu, Y.-T., Shiba, K., Chien, Y.-S., Mita, C., Kawachi, I., and Daoud, A. (2021). A scoping review on the use of machine learning in research on social determinants of health: Trends and research prospects. SSM - Population Health, 15, 100836.
+\bibitem{sarker} Sarker, I.H. Machine Learning: Algorithms, Real-World Applications and Research Directions. SN COMPUT. SCI. 2, 160 (2021). https://doi.org/10.1007/s42979-021-00592-x
+\bibitem{Alsuraihi} Alsuraihi, W., Al-hazmi, E., Bawazeer, K., \& AlGhamdi, H. Machine learning algorithms for diamond price prediction. In Proceedings of the 2020 2nd International Conference on Image, Video and Signal Processing, 150–154 (2020).
+\bibitem{Mamonov} Mamonov, S. \& Triantoro, T. Subjectivity of diamond prices in online retail: Insights from a data mining study. J. Theor. Appl. Electron. Commer. Res. 13(2), 15–28 (2018).
+\bibitem{Pandey} Pandey, A. C., Misra, S., \& Saxena, M. Gold and diamond price prediction using enhanced ensemble learning. In 2019 Twelfth International Conference on Contemporary Computing (IC3), 1–4 (IEEE, 2019).
+\bibitem{Scott} Scott, F. \& Yelowitz, A. Pricing anomalies in the market for diamonds: Evidence of conformist behavior. Econ. Inq. 48(2), 353–368 (2010).
+\bibitem{Kutner}Michael Kutner, Christopher Nachtsheim, John Neter, and William Li. Applied Linear Statistical Models. 1974.
+\bibitem{Seber}Seber, G. A. F., \& Lee, A. J. (2012). Linear Regression Analysis. Hoboken, NJ: John Wiley \& Sons.
+\bibitem{Wright} Wright, John T. "Linear Regression Analysis." British Medical Journal, vol. 310, no. 6977, 1995, pp. 1120-1124. BMJ Group
+\bibitem{Weisberg} Weisberg, S. (2005). Applied Linear Regression. Wiley.
+\bibitem{Breiman} Breiman, L. (2001). Random forests. Machine Learning, 45(1), 5-32.
+\bibitem{Chen} Chen, T., \& Guestrin, C. (2016). XGBoost: A Scalable Tree Boosting System. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (pp. 785-794).
+\bibitem{LeCun} LeCun, Y., Bengio, Y., \& Hinton, G. (2015). Deep learning. Nature, 521(7553), 436-444.
+\bibitem{Rumelhart} Rumelhart, D. E., Hinton, G. E., \& Williams, R. J. (1986). Learning representations by back-propagating errors. Nature, 323(6088), 533-536.
+\bibitem{Bergstra} Bergstra, J., \& Bengio, Y. (2012). Random search for hyper-parameter optimization. Journal of Machine Learning Research, 13(Feb), 281-305.
+\bibitem{us} U.S. jewelry market size and share: Industry Report, 2030. U.S. Jewelry Market Size And Share | Industry Report, 2030. (n.d.). https://www.grandviewresearch.com/industry-analysis/us-jewelry-market-report
+\bibitem{diamond} Diamond Jewelry Market Size \& Share Analysis Report, 2030. (n.d.). https://www.grandviewresearch.com/industry-analysis/diamond-jewelry-market-report
+\bibitem{kaggle} Agrawal, S. (2017a, May 25). Diamonds. Kaggle. https://www.kaggle.com/datasets/shivam2503/diamonds
 \end{thebibliography}
 \vspace{12pt}
-
-
-
-
-
 
 \end{document}
