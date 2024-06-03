@@ -6,6 +6,7 @@
 \usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{textcomp}
+%\usepackage{subcaption}
 \usepackage{natbib}
 \usepackage{float}
 \usepackage{xcolor}
@@ -36,7 +37,7 @@ XXX}
 \IEEEauthorblockA{\textit{Department of Computer Science} \\
 \textit{University of California, Davis}\\
 Davis, United States \\
-XXX}
+harcui@ucdavis.edu}
 \and
 \IEEEauthorblockN{Nandini Koladi}
 \IEEEauthorblockA{\textit{Department of Computer Science} \\
@@ -109,7 +110,7 @@ To explore the dataset further and understand the relationships between these fe
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.745\linewidth]{Figure_1.png}
+    \includegraphics[width=0.7\linewidth]{Figure_1.png}
     \caption{Distribution Plot of Continuous Features. Identify trends in our dataset such as skewness, location of outliers, mean, median, scale, etc.}
     \label{fig:image_label}
 \end{figure}
@@ -143,7 +144,7 @@ From our table, we can observe that the mean and median values for most features
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{Figure_4.png} % Replace "example-image" with the filename of your image
+    \includegraphics[width=0.7\linewidth]{Figure_4.png} % Replace "example-image" with the filename of your image
     \caption{Pair-wise Scatterplots for Each Feature vs. Diamond Price}
     \label{fig:image_label}
 \end{figure}
@@ -152,7 +153,7 @@ From the scatter-plots of each feature against the response variable, we observe
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{Figure_3.png} % Replace "example-image" with the filename of your image
+    \includegraphics[width=0.7\linewidth]{Figure_3.png} % Replace "example-image" with the filename of your image
     \caption{Correlation Heat-Map for Continuous Features vs Diamond Price}
     \label{fig:image_label}
 \end{figure}
@@ -204,7 +205,7 @@ The boxplots indicate that outliers were removed for carat, while several other 
 
 In this paper, we will explore the predictive capabilities of several machine learning algorithms, ranging from linear regression, decision trees, and artificial neural networks. Our approach involved several steps to develop and evaluate model performance to choose the most accurate algorithm. Data pre-processing has already been completed as described above. We divided the dataset into training and testing sets using a 75:25 split. The training data consists of 38,000 rows, while the testing data contains 12,000 rows. We use cross validation procedures (detailed below) to find the optimal degree of our polynomial regression model and set of optimal hyperparameters for the decision trees \& neural network models. 
 
-\subsection{Linear Regression}
+\subsection{Regression}
 
 We begin with linear regression model to fit a straight-line model between diamond prices and the aforementioned features. This initial step helps us gain intuition about the relationship between the features and diamond prices using a simple model. From our EDA step, since price displayed a quadratic relationship with carat and diamond dimensions (x,y,z), we implement a polynomial regression model to test its performance. While the graph indicates a potential quadratic relationship, we employ 5-fold cross-validation by testing powers from 1 to find the optimal degree of our regression model.This allows us to capture nonlinear relationships and assess whether polynomial regression outperforms traditional linear regression.
 
@@ -240,7 +241,7 @@ This broad range of values for each hyperparameter enables us to explore a wide 
 
 \subsection{Neural Networks}
 
-In our exploration of predicting diamond prices, we employ artificial neural networks (ANNs). Our ANN architecture consists of a single hidden layer with ReLU activation, followed by an output layer also utilizing ReLU activation, as our task involves regression. To optimize the performance of our ANN, we conduct a grid search for hyperparameter tuning, aiming to select the most suitable parameters for our model. We explore the following hyperparameters during grid search with a 5-fold cross-validation procedure. We explore the following set of hyperparameters:
+In our exploration of predicting diamond prices, we employ neural networks. Our neural network architecture consists of a single hidden layer with ReLU activation, followed by an output layer also utilizing ReLU activation, as our task involves regression. To optimize the performance of our model, we conduct a grid search for hyperparameter tuning, aiming to select the most suitable parameters for our model. We explore the following hyperparameters during grid search with a 5-fold cross-validation procedure. We explore the following set of hyperparameters:
 
 \begin{itemize}
     \item \emph{Learning Rate:} 0.001, 0.01, 0.1
@@ -383,32 +384,41 @@ We used a 5-fold cross-validation procedure with an extensive Grid Search approa
 \hline
 Hyperparameter & Optimal Value \\
 \hline
-Learning Rate & XXX \\
+Learning Rate & 0.1 \\
 \hline
-Epochs & XXX \\
+Epochs & 250 \\
 \hline
-Batch Size & XXX \\
+Batch Size & 256 \\
 \hline
-Optimizer & XXX \\
+Optimizer & RMSProp \\
 \hline
-Dropout Rate & XXX \\
+Dropout Rate & None \\
 \hline
-Number of Neurons in Hidden Layer & XXX \\
-\hline
-Number of Hidden Layers & XXX \\
+Number of Neurons in Hidden Layer & 64 \\
 \hline
 \end{tabular}
 \label{tab:mytable}
 \end{table}
 
-The grid search method results in the architecture of our neural network model. Specifically, [...] Here, we present the training versus testing loss (MSE) across epochs during the training of our neural network model, along with its final performance on the testing data.
+The grid search method results in the architecture of our neural network model. Specifically, the neural network architecture seems to consist of a single hidden layer with 64 neurons, employing a learning rate of 0.1, RMSProp optimizer, and no dropout regularization. It underwent training for 250 epochs with a batch size of 256. 
+Here, we present the training versus testing loss (MSE) across epochs during the training of our neural network model, along with its final performance on the testing data.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{train vs test.png} % Replace "example-image" with the filename of your image
-    \caption{Training vs Testing MSE Across Epoch}
+    \includegraphics[width=0.8\linewidth]{1000.png} % Replace "example-image" with the filename of your image
+    \caption{MAE vs Degree of Polynomial Regression model}
     \label{fig:boxplots}
 \end{figure}
+
+From our results of training the neural network across 1000 epochs, we observe that the model effectively learns the weights. Specifically, both the training and testing errors significantly reduce during the initial stages of training. However, around 500 epochs, our neural network model begins to overfit the data: the testing error starts to increase significantly while the training error continues to decrease. This indicates that we can use 250 epochs as our stopping point for neural network training to avoid overfitting.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{250.png} % Replace "example-image" with the filename of your image
+    \caption{MAE vs Degree of Polynomial Regression model}
+    \label{fig:boxplots}
+\end{figure}
+
 
 As we can see, based on our neural network architecture, the training and testing loss appear to go down quite a bit once we finish implementing across epochs. Thus this approach is good [...]
 
@@ -419,7 +429,7 @@ As we can see, based on our neural network architecture, the training and testin
 \hline
 Method & MSE & MAE & $R^2$ \\
 \hline
-Neural Network & XXX & XXX & XXX \\
+Neural Network & 382,237.13 & 272.47 & 0.9652  \\
 \hline
 \end{tabular}
 \label{tab:mytable}
@@ -434,23 +444,23 @@ The table below displays the performance of each algorithm we've taken from abov
 \caption{Comparison of Algorithms}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-Method & MSE & MAE & $R^2$ & BIC \\
+Method & MSE & MAE & $R^2$ \\
 \hline
-Linear Regression & 1,110,908.273 & 718.843 & 0.898 & XXX \\
+Linear Regression & 1,110,908.273 & 718.843 & 0.898 \\
 \hline
-Polynomial Regression & 459,504.630 & 381.455 &  0.958 & XXX \\
+Polynomial Regression & 459,504.630 & 381.455 &  0.958 \\
 \hline
-Random Forests & 228,347.747 & 247.141 & 0.9803 & XXX \\
+Random Forests & 228,347.747 & 247.141 & 0.9803  \\
 \hline
-XGBoost & 195,937.71 & 233.941 & 0.9831 & XXX \\
+XGBoost & 195,937.71 & 233.941 & 0.9831 \\
 \hline
-Neural Networks & XXX & XXX & XXX & XXX \\
+Neural Networks & 382,237.13 & 272.47 & 0.9652 \\
 \hline
 \end{tabular}
 \label{tab:mytable}
 \end{table}
 
-[ADD ANALYSIS]
+The comparison of algorithms for diamond pricing reveals that XGBoost performs the best, achieving the lowest MSE (195,937.71) and MAE (233.941), along with the highest $R^2$ (0.9831), indicating it provides the most accurate price predictions and best explains the variance in diamond prices. Random Forests also demonstrate strong performance, closely following XGBoost. Neural Networks and Polynomial Regression are effective but exhibit higher error rates and slightly lower $R^2$ values, making them less precise. Linear Regression, though straightforward and easy to interpret, performs the worst with the highest MSE and MAE, and the lowest $R^2$, suggesting it is the least reliable for predicting diamond prices. Therefore, ensemble methods like XGBoost and Random Forests are the most effective models for accurate diamond pricing, while Linear Regression is the least suitable.
 
 \section{Conclusion}
 
@@ -460,9 +470,9 @@ Our findings suggest that leveraging these advanced models can provide jewelers 
 
 By adopting robust machine learning methodologies, the diamond industry can benefit from more precise pricing strategies, ultimately leading to improved market efficiency and customer satisfaction.
 
-\section{Project RoadMap}
+\section{Project Road-Map}
 
-Our project involves a regression-supervised learning task in the context of predicting the price of a diamond based on several different measures. Our dataset contains 53,940 observations and 9 columns (8 predictors and 1 response). The output variable “price” is continuous and has a range between $326 to $18,823. With this, our goal for this project is to create a machine-learning model using deep neural networks that can predict diamond prices as accurately as possible. The practical application of this project is quite significant, as an effective model can assist researchers and industry professionals in determining the value of diamonds in the market. 
+Our project involves a regression-supervised learning task in the context of predicting the price of a diamond based on several different measures. Our dataset contains 53,940 observations and 9 columns (8 predictors and 1 response). The output variable “price” is continuous and has a range between \$326 to \$18,823. With this, our goal for this project is to create a machine-learning model using deep neural networks that can predict diamond prices as accurately as possible. The practical application of this project is quite significant, as an effective model can assist researchers and industry professionals in determining the value of diamonds in the market. 
 As a part of developing our machine learning pipeline, we will first begin with exploratory data analysis. We do not have any missing values present, so we don’t have to worry about any data imputation for this specific project. First, we will begin by plotting the distribution of our features to understand the spread of our data and account for potential skewness. Since outliers can have significant effects on the overall accuracy of machine learning models, we will look for them in our dataset and remove them. We will use various outlier detection techniques such as one-class SVM and through the IQR computation; we're still planning the specific details as to how we will approach this step. Furthermore, since we have 3 categorical variables, we will use one-hot encoding and label encoding (in the case of an ordinal column) to convert them into numeric columns. Ultimately, our goal with EDA is to clean the dataset and understand the relationship between the predictors and the response variable. In terms of timeline, we plan to dedicate the EDA portion of our dataset this week/early next week (~ 1/1.5 weeks) before we begin training the model. We aim to have this portion of the project completed before the quarter midpoint and begin the process of training the model as well.
 
 Once EDA is complete, we are going to use deep neural networks to train a machine learning algorithm that will most accurately predict diamond prices. Neural networks are quite complex and include many hyper-parameters, so we want to explore several of them and see how they can help improve our results. In particular, we will begin by using K-fold cross-validation to train several neural networks of different sizes (with the number of layers and neurons varying) and compare the performance of each method in predicting diamond price. We will use the metrics learned in class, using total error and MSE as benchmarks for overall model performance. Furthermore, we are interested in exploring regularization techniques such as L2 regularization (possibly dropout/weight-decay on the learning rate as well, if time permits) to reduce overfitting and further improve the total error. Our goal is to produce the best model in terms of accuracy while also achieving a low training time; thus we will explore the implementation of different optimization techniques such as momentum SGD/RMSProp/Adam (choose one of three, likely momentum GD since we will be able to explain the concepts behind it clearly) to see how they affect our results in comparison to gradient descent. The details and concept of our optimization techniques will be included as part of the literature review section in the project report. Lastly, we may explore the effect of different activation functions (sigmoid/tanh) to see how the model performs in terms of accuracy and performance when non-linearity is introduced. Ultimately, our final goal is to develop a model such that we can get the best prediction accuracy on the generalized unseen data. 
@@ -498,6 +508,7 @@ The \textbf{Github repository} for our project may be found here: https://github
 \bibitem{Bottou} Bottou, L. (2010). Large-Scale Machine Learning with Stochastic Gradient Descent. In Proceedings of COMPSTAT'2010, Springer. DOI: 10.1007/978-3-7908-2604-3\_16
 \bibitem{Kingma} Kingma, D. P., \& Ba, J. (2015). Adam: A Method for Stochastic Optimization. In International Conference on Learning Representations (ICLR). URL: https://arxiv.org/abs/1412.6980
 \bibitem{Tieleman} Tieleman, T., \& Hinton, G. (2012). Lecture 6.5 - RMSProp: Divide the gradient by a running average of its recent magnitude. COURSERA: Neural Networks for Machine Learning. URL: https://www.cs.toronto.edu/~tijmen/csc321/slides/lecture\_slides\_lec6.pdf
+
 \end{thebibliography}
 \vspace{12pt}
 
