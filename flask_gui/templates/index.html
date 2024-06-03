@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diamond Price Prediction Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            align-items: flex-start;
+        }
+        .intro-container, .form-container, .helper-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+        }
+        .intro-container {
+            max-width: 200px;
+        }
+        .form-container {
+            width: 300px;
+        }
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .helper-container {
+            max-width: 200px;
+        }
+        .helper-container h4 {
+            margin-top: 0;
+        }
+        .helper-container ul {
+            padding-left: 20px;
+        }
+        .helper-container li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="intro-container">
+            <h3>Welcome!</h3>
+            <p>Please fill out the form to get a prediction for the price of a diamond based on its characteristics. Use the helper guide on the right for reference.</p>
+        </div>
+        
+        <div class="form-container">
+            <h3>Diamond Price Prediction Form</h3>
+            <form action="/result" method="POST">
+                <label for="carat">Carat</label>
+                <input type="number" id="carat" name="carat" step="0.01" required>
+                <br>
+                <label for="depth">Depth Percentage (0-100)</label>
+                <input type="number" id="depth" name="depth" min="0" max="100" step="0.01" required>
+                <br>
+                <label for="table">Table (0-100)</label>
+                <input type="number" id="table" name="table" min="0" max="100" step="0.01" required>
+                <br>
+                <label for="x">x</label>
+                <input type="number" id="x" name="x" step="0.01" required>
+                <br>
+                <label for="y">y</label>
+                <input type="number" id="y" name="y" step="0.01" required>
+                <br>
+                <label for="z">z</label>
+                <input type="number" id="z" name="z" step="0.01" required>
+                <br>
+                <label for="cut_encoded">Cut</label>
+                <select id="cut_encoded" name="cut_encoded" required>
+                    <option value="0">Fair</option>
+                    <option value="1">Good</option>
+                    <option value="2">Very Good</option>
+                    <option value="3">Premium</option>
+                    <option value="4">Ideal</option>
+                </select>
+                <br>
+                <label for="color_encoded">Color</label>
+                <select id="color_encoded" name="color_encoded" required>
+                    <option value="0">J</option>
+                    <option value="1">I</option>
+                    <option value="2">H</option>
+                    <option value="3">G</option>
+                    <option value="4">F</option>
+                    <option value="5">E</option>
+                    <option value="6">D</option>
+                </select>
+                <br>
+                <label for="clarity_encoded">Clarity</label>
+                <select id="clarity_encoded" name="clarity_encoded" required>
+                    <option value="0">I1</option>
+                    <option value="1">SI2</option>
+                    <option value="2">SI1</option>
+                    <option value="3">VS2</option>
+                    <option value="4">VS1</option>
+                    <option value="5">VVS2</option>
+                    <option value="6">VVS1</option>
+                    <option value="7">IF</option>
+                </select>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div class="helper-container">
+            <h4>Helper Guide</h4>
+            <h5>Cut</h5>
+            <ul>
+                <li>0 - Fair</li>
+                <li>1 - Good</li>
+                <li>2 - Very Good</li>
+                <li>3 - Premium</li>
+                <li>4 - Ideal</li>
+            </ul>
+            <h5>Color</h5>
+            <ul>
+                <li>0 - J</li>
+                <li>1 - I</li>
+                <li>2 - H</li>
+                <li>3 - G</li>
+                <li>4 - F</li>
+                <li>5 - E</li>
+                <li>6 - D</li>
+            </ul>
+            <h5>Clarity</h5>
+            <ul>
+                <li>0 - I1</li>
+                <li>1 - SI2</li>
+                <li>2 - SI1</li>
+                <li>3 - VS2</li>
+                <li>4 - VS1</li>
+                <li>5 - VVS2</li>
+                <li>6 - VVS1</li>
+                <li>7 - IF</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
