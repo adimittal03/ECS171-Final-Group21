@@ -35,7 +35,7 @@ scaler = joblib.load('scaler.joblib')
 
 @app.route('/')
 def home():
-    return render_template('templates/index.html')
+    return render_template('index.html')
 
 @app.route('/result', methods=['POST'])
 def predict():
@@ -54,13 +54,13 @@ def predict():
         # Prepare input data for prediction
         input_data = np.array([[carat, depth, table, x, y, z, cut_encoded, color_encoded, clarity_encoded]])
         
-        # Preprocess input data for polynomial regression model
-        poly = PolynomialFeatures(2)
-        input_data_poly = poly.fit_transform(input_data)
-        
         # Scale the input data
         input_data_scaled = scaler.transform(input_data)
         
+        # Preprocess input data for polynomial regression model
+        poly = PolynomialFeatures(2)
+        input_data_poly = poly.fit_transform(input_data_scaled)
+   
         # Make predictions using all models
         predictions = {}
         for model_name, model in models.items():
@@ -79,10 +79,10 @@ def predict():
             predictions['neural_network'] = "Model not available"
         
         # Return the predicted results to the user
-        return render_template("templates/results.html", predictions=predictions)
+        return render_template("results.html", predictions=predictions)
     except Exception as e:
         print("Error:", e)
-        return render_template("templates/error.html")
+        return render_template("error.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
