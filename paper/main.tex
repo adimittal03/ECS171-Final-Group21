@@ -10,61 +10,80 @@
 \usepackage{natbib}
 \usepackage{float}
 \usepackage{xcolor}
+\usepackage{authblk}
 \bibliographystyle{plainnat}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 
-\title{Machine Learning Approaches for Accurate Diamond Price Prediction\\
+\title{Machine Learning Based Approaches to Accurate Diamond Price Prediction\\
 \thanks{Final Project Report ECS-171: \textbf{Group 21}}
 }
 
-\author{
-\IEEEauthorblockN{Aditya Mittal}
-\IEEEauthorblockA{\textit{Department of Statistics} \\
-\textit{University of California, Davis}\\
-Davis, United States \\
-adimittal@ucdavis.edu}
-\and
-\IEEEauthorblockN{Andrew Yeow}
-\IEEEauthorblockA{\textit{Department of Computer Science} \\
-\textit{University of California, Davis}\\
-Davis, United States \\
-acyeow@ucdavis.edu}
-\and
-\IEEEauthorblockN{Yifan Cui}
-\IEEEauthorblockA{\textit{Department of Computer Science} \\
-\textit{University of California, Davis}\\
-Davis, United States \\
-harcui@ucdavis.edu}
-\and
-\IEEEauthorblockN{Nandini Kodali}
-\IEEEauthorblockA{\textit{Department of Computer Science} \\
-\textit{University of California, Davis}\\
-Davis, United States \\
-skodali@ucdavis.edu}
-\and
-\IEEEauthorblockN{Eshan Toshniwal}
-\IEEEauthorblockA{\textit{Department of Computer Science} \\
-\textit{University of California, Davis}\\
-Davis, United States \\
-etoshniwal@ucdavis.edu}
-}
+% \author{
+% \IEEEauthorblockN{Aditya Mittal}
+% \IEEEauthorblockA{\textit{Department of Statistics} \\
+% \textit{University of California, Davis}\\
+% Davis, United States \\
+% adimittal@ucdavis.edu}
+% \and
+% \IEEEauthorblockN{Andrew Yeow}
+% \IEEEauthorblockA{\textit{Department of Computer Science} \\
+% \textit{University of California, Davis}\\
+% Davis, United States \\
+% XXX}
+% \and
+% \IEEEauthorblockN{Yifan Cui}
+% \IEEEauthorblockA{\textit{Department of Computer Science} \\
+% \textit{University of California, Davis}\\
+% Davis, United States \\
+% harcui@ucdavis.edu}
+% \and
+% \IEEEauthorblockN{Nandini Koladi}
+% \IEEEauthorblockA{\textit{Department of Computer Science} \\
+% \textit{University of California, Davis}\\
+% Davis, United States \\
+% XXX}
+% \and
+% \IEEEauthorblockN{Eshan Toshniwal}
+% \IEEEauthorblockA{\textit{Department of Computer Science} \\
+% \textit{University of California, Davis}\\
+% Davis, United States \\
+% XXX}
+% }
+
+\author[1]{Aditya Mittal}
+\author[2]{Andrew Yeow}
+\author[3]{Yifan Cui}
+\author[4]{Nandini Koladi}
+\author[5]{Eshan Toshniwal}
+\affil[1]{Department of Statistics; University of California, Davis}
+\affil[2]{Department of Computer Science; University of California, Davis}
+\affil[3]{Department of Computer Science; University of California, Davis}
+\affil[4]{Department of Computer Science; University of California, Davis}
+\affil[5]{Department of Computer Science; University of California, Davis}
 
 \begin{document} 
 \maketitle
 
 \begin{abstract}
-In 2023, the U.S. jewelry market was valued at 73.32 billion USD, with diamonds comprising a significant share. Accurate diamond price prediction is essential for jewelers. This paper explores machine learning algorithms, including linear regression, polynomial regression, Random Forests, XGBoost, and neural networks, to predict diamond prices based on carat, cut, color, and clarity. Exploratory data analysis identified carat as the most influential feature. Our methodology involves rigorous model evaluation using metrics like Mean Squared Error (MSE), Mean Absolute Error (MAE), and R-squared (R²). Experimental results show XGBoost outperformed other models, achieving the lowest testing error, followed closely by Random Forests. Polynomial regression also performed well, highlighting the importance of capturing non-linear relationships. The neural network model, while promising, needs further optimization. By developing a robust predictive model, we aim to enhance pricing precision, benefiting both businesses and consumers in the diamond market.
+In 2023, the U.S. jewelry market was valued at an approximate 73.32 billion USD, with diamonds capturing a significant share. Consequently, accurate diamond price prediction of diamonds is critical for both jewelers and consumers alike. This paper explores several machine learning algorithms, including regression models, tree-based ensemble methods, and artificial neural networks, to predict diamond prices based on important characteristics such as carat, cut, color, and clarity. Our exploratory data analysis identified carat as the most influential feature with regards to diamond prices. Our methodology involves rigorous model evaluation using metrics like Mean Squared Error (MSE), Mean Absolute Error (MAE), and R-squared ($R^2$) on testing data. The experimental results indicate that \emph{XGBoost} outperformed other models by achieving the lowest testing error, followed closely by Random Forests and the Artificial Neural Network. Polynomial regression also performed well, capturing the non-linear relationship between diamond prices and its features. The neural network model also demonstrated strong results for predictions, and will benefit from further tuning. By developing a robust predictive model, we aim to enhance pricing precision, benefiting both businesses and consumers in the diamond market.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Diamond pricing, machine learning, predictive modeling, neural network, decision trees
+Diamond Pricing, Machine Learning, Artificial Neural Network, Ensemble Methods - Random Forests, XGBoost
 \end{IEEEkeywords}
 
 \section{Introduction}
 
-In 2023, the jewelry market in the United States was estimated to be worth 73.32 billion USD, with projections for 2024 reaching 96.61 billion USD \cite{us}. Clearly, the market for jewelry is quite significant and continues to display steady growth. In particular, \emph{diamonds} account for a significant portion of this market, covering an estimated 50-60\% market share as compared to some of the other precious stones such as gold, silver, etc \cite{diamond}. Consequently, it becomes important for jewelers to adopt accurate methods to predict prices of these diamonds to better serve their consumers. In fact, businesses have began educating their sellers on essential qualities such as cut, color, carat weight, and clarity to make informed pricing decisions. As such, ensuring accurate price predictions becomes very important as it has significant financial implications on both businesses and consumers alike.
+In 2023, the jewelry market in the United States was estimated to be worth 73.32 billion USD, with projections for 2024 reaching 96.61 billion USD \cite{us}. Clearly, the market for jewelry is quite significant and continues to display steady growth. In particular, \emph{diamonds} account for a significant portion of this market, covering an estimated 50-60\% market share as compared to some of the other precious stones such as gold, silver, etc \cite{diamond}. Consequently, it becomes important for jewelers to adopt accurate methods to predict prices of these diamonds to better serve their consumers. In fact, businesses have began educating their sellers on essential qualities such as cut, color, carat weight, and clarity to make informed pricing decisions. As such, ensuring accurate price predictions becomes very important as it has significant financial implications on both businesses and consumers alike. Figure \ref{fig:diamond_intro} below demonstrates the importance of accurate diamond pricing. Two diamonds can differ significantly based on features such as carat, underscoring the need for precise price prediction methods. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{diamond_intro.png} % Replace "example-image" with the filename of your image
+    \caption{Two different diamonds differing in carat and overall pricing. The 1-carat diamond ranges from \$2,000- \$20,000, while the 2-carat diamond ranges from \$9,800 to \$64,500. This highlights the importance of accurate price prediction based on the given characteristics.}
+    \label{fig:diamond_intro}
+\end{figure}
 
 Given the importance of this task, it becomes crucial to develop methods that enable accurate prediction of prices for these diamonds. Machine learning, with its ability to learn patterns in data and generate predictions, has become extremely popular in recent years across a wide range of applications \cite{kino}. Recent advancements in machine learning have introduced a range of algorithms, including linear regression, K-Nearest Neighbors, Random Forests, and the increasingly popular neural networks \cite{sarker}. In this paper, we explore several different machine learning algorithms to accurately predict diamond prices based on their given characteristics, including those mentioned above. The application of creating models to generate accurate predictions is widespread, as it can aid jewelers and marketers who aim to provide accurate pricing methods for consumers in the jewelry market.
 
@@ -74,7 +93,7 @@ The outline of this paper is as follows: Section 2 reviews the related literatur
 
 \section{Literature Review}
 
-Much literature has been published to develop predictive models for accurately estimating diamond prices, using various social contexts and individual diamond characteristics. Alsuraihi et al. \cite{Alsuraihi} aimed to develop an accurate algorithm to estimate diamond prices. They considered various features such as diamond sizes and other key factors. Various machine learning methods were tested, including Linear Regression, Random Forest Regression, Polynomial Regression, Gradient Descent, and Neural Networks. Similarly, Mamonov and Triantoro \cite{Mamonov} studied the relationship between a diamond's physical attributes and respective prices in e-commerce contexts, with the goal of understanding how these attributes affect diamond prices. However, their study did not account for the diamond cut, a significant factor affecting market value, which is included in our dataset. Pandey et al. \cite{Pandey} addressed the challenge of forecasting future values of precious metals like gold and diamonds. They used ensemble approaches combined with feature selection techniques to enhance prediction accuracy. In an alternate perspective, Scott and Yelowitz \cite{Scott} investigated diamond prices in the context its social status and intrinsic value. They collected data from online diamond sellers and empirically examined factors influencing diamond prices, considering carat weight, color, cut, and clarity in determining the logarithm of price. Clearly, a variety of approaches have been taken to create accurate prediction models, ranging from investigating social contexts to individual characteristics. In this paper, we utilize several algorithms to create accurate models by building on the previous work. With this, the latter half of this section provides an overview of several machine learning algorithms applied in this paper, including regression models, decision trees, and neural networks. We also examine Grid Search as a method for hyperparameter tuning.
+Much literature has been published to develop predictive models for accurately estimating diamond prices, using various social contexts and individual diamond characteristics. Alsuraihi et al. \cite{Alsuraihi} aimed to develop an accurate algorithm to estimate diamond prices. They considered various features such as diamond sizes and other key factors. Various machine learning methods were tested, including Linear Regression, Random Forest Regression, Polynomial Regression, Gradient Descent, and Neural Networks. Similarly, Mamonov and Triantoro \cite{Mamonov} studied the relationship between a diamond's physical attributes and respective prices in e-commerce contexts, with the goal of understanding how these attributes affect diamond prices. However, their study did not account for the diamond cut – a significant factor affecting market value – which is indeed included in our dataset. Pandey et al. \cite{Pandey} addressed the challenge of forecasting future values of precious metals like gold and diamonds. They used ensemble approaches combined with feature selection techniques to enhance prediction accuracy. In an alternate perspective, Scott and Yelowitz \cite{Scott} investigated diamond prices in the context its social status and intrinsic value. They collected data from online diamond sellers and empirically examined factors influencing diamond prices, considering carat weight, color, cut, and clarity in determining the logarithm of price. Clearly, a variety of approaches have been taken to create accurate prediction models, ranging from investigating social contexts to individual characteristics. In this paper, we utilize several algorithms to create accurate models and build on this previous work. With this, the latter half of this section provides an overview of several machine learning algorithms applied in this paper, including regression models, decision trees, and neural networks. We also examine Grid Search as a method for hyperparameter tuning.
 
 \subsection{Linear Regression}
 
@@ -98,7 +117,7 @@ Neural networks have recently become extremely popular with advances in deep lea
 
 Both Neural Networks and decision trees include a variety of hyperparameters that significantly impact their performance and overall generalization ability on unseen data. In the context of decision trees, important hyperparameters include the maximum depth of the tree, minimum samples required to split a node, and the minimum samples required at each leaf node. For neural networks, key hyperparameters encompass the learning rate, batch size, number of hidden layers, and the number of neurons per layer. Grid search is a method for hyperparameter tuning that evaluates a predefined set (grid) of hyperparameters and finds the optimal configuration among them. This method is quite computationally heavy, as it explore every configuration among the given hyperparameter space to identify the most suitable combination for a given problem. Bergstra and Bengio (2012) \cite{Bergstra} discusses grid search's efficiency and limitations highlights its importance in fine-tuning machine learning models for optimal performance.
 
-With this, our literature review provides an overview of the research conducted on predicting diamond prices, including discussions on pertinent algorithms such as linear regression, decision trees, and neural networks. For hyperparameter tuning, we plan to utilize Grid Search to optimize the performance of both the decision trees and neural network models. Next, we proceed with dataset exploration and perform pre-processing on our features.
+With this, our literature review provides a comprehensive overview of the previous efforts conducted on predicting diamond prices, including discussions on pertinent algorithms such as linear regression, decision trees, and neural networks. For hyperparameter tuning, we plan to utilize Grid Search to optimize the performance of both the decision trees and neural network models. Next, we proceed with dataset exploration and perform pre-processing on our features.
 
 \section{Dataset Description and Exploratory Data Analysis}
 
@@ -110,12 +129,12 @@ To explore the dataset further and understand the relationships between these fe
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.53\linewidth]{Figure_1.png}
+    \includegraphics[width=0.60\linewidth]{distribution_plots.png}
     \caption{Distribution Plot of Continuous Features. Identify trends in our dataset such as skewness, location of outliers, mean, median, scale, etc.}
-    \label{fig:image_label}
+    \label{fig:distribution}
 \end{figure}
 
-The distribution of continuous predictors highlight potential skewness in our dataset. For instance, the predictor \emph{carat} suggests potential skewness to the right – with many upper outliers – as evidenced by its distribution plot. This trend holds true for features \emph{y} and \emph{z} as well. These plots suggest that our dataset may contain a significant number of upper outliers, which we will consider removing in the data pre-processing stage. To further gain insight on the distribution of our continuous features, the table below summarizes the mean, median, and standard deviation of the each predictor:
+Figure \ref{fig:distribution} displays the distribution of continuous predictors and highlight potential skewness in our dataset. For instance, the predictor \emph{carat} suggests potential skewness to the right – with many upper outliers – as evidenced by its distribution plot. This trend holds true for features \emph{y} and \emph{z} as well. These plots suggest that our dataset may contain a significant number of upper outliers, which we will consider removing in the data pre-processing stage. To further gain insight on the distribution of our continuous features, the table below summarizes the mean, median, and standard deviation of the each predictor:
 
 \begin{table}[H]
     \centering
@@ -144,27 +163,27 @@ From our table, we can observe that the mean and median values for most features
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{Figure_4.png} % Replace "example-image" with the filename of your image
-    \caption{Pair-wise Scatterplots for Each Feature vs. Diamond Price}
+    \includegraphics[width=0.61\linewidth]{scatter.png} 
+    \caption{Pairwise scatter-plots for Each Feature vs. Diamond Price. Displays a quadratic relationship between Carat, x, y, z and diamond pricing.}
     \label{fig:scatter}
 \end{figure}
 
-From the scatter-plots of each feature against the response variable, we observe a quadratic relationship between the features, carat, x, y, and z, with respect to the the response variable price. This suggests that a polynomial regression model might be suitable for our dataset in addition to a linear regression model. Thus, we will evaluate the polynomial regression model's performance on this dataset and compare it with traditional linear regression. Next, we will analyze the correlations between the continuous features and the target variable, price, to determine the most influential predictors. This will allow us to identify the most relevant features and potential multicollinearity and interactions among the predictors.
+Figure \ref{fig:scatter} displays the scatter-plots of each feature against the response variable, we observe a quadratic relationship between the features, carat, x, y, and z, with respect to the the response variable price. This suggests that a polynomial regression model might be suitable for our dataset in addition to a linear regression model. Thus, we will evaluate the polynomial regression model's performance on this dataset and compare it with traditional linear regression. Next, we will analyze the correlations between the continuous features and the target variable, price, to determine the most influential predictors. This will allow us to identify the most relevant features and potential multicollinearity and interactions among the predictors.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{Figure_3.png} % Replace "example-image" with the filename of your image
-    \caption{Correlation Heat-Map for Continuous Features vs Diamond Price}
-    \label{fig:image_label}
+    \includegraphics[width=0.7\linewidth]{correlation.png} % Replace "example-image" with the filename of your image
+    \caption{Correlation Heat-Map for Continuous Features vs Diamond Price. It reveals that the feature 'carat' has the highest correlation (0.92) with diamond pricing.}
+    \label{fig:corr}
 \end{figure}
 
-Based on the results of our correlation heatmap, the feature \emph{Carat} appears to be highly correlated with price, with a correlation coefficient of 0.92. Similarly, it is correlated with dimension features \emph{x}, \emph{y}, and \emph{z}. This makes sense, as carat weight would directly relate to diamond size. Thus, this plot suggests that Carat (and potentially dimensions) are the strongest predictors for diamond price. On the other hand, both depth percentage and table have almost zero correlation, indicating that they do not have much association with diamond prices. We showcase data pre-processing methods for outlier removal using carat below. Thus, this heatmap is insightful in identifying the key predictors for diamond prices and guiding our feature selection process. Next, we will examine histograms for the distribution of categorical features cut, clarity, and color:
+Based on the results of our correlation heatmap in figure \ref{fig:corr}, the feature \emph{Carat} appears to be highly correlated with price, with a correlation coefficient of 0.92. Similarly, it is correlated with dimension features \emph{x}, \emph{y}, and \emph{z}. This makes sense, as carat weight would directly relate to diamond size. Thus, this plot suggests that Carat (and potentially dimensions) are the strongest predictors for diamond price. On the other hand, both depth percentage and table have almost zero correlation, indicating that they do not have much association with diamond prices. We showcase data pre-processing methods for outlier removal using carat below. Thus, this heatmap is insightful in identifying the key predictors for diamond prices and guiding our feature selection process. Next, we will examine histograms for the distribution of categorical features cut, clarity, and color:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{figure_5.png} % Replace "example-image" with the filename of your image
-    \caption{Histogram for the distribution of categorical features: Cut, Clarity, and Color }
-    \label{fig:image_label}
+    \includegraphics[width=0.8\linewidth]{histogram.png} 
+    \caption{Histogram for the distribution of categorical features: Cut, Clarity, and Color.}
+    \label{fig:histogram}
 \end{figure}
 
 The histogram of the categorical variables displays their frequencies. Upon initial analysis of the plot, we observe that the cut category "Ideal" appears most frequently, followed by "Premium" and "Very Good," while the "Fair" cut appears least frequently. The distribution of color appears to be well spread, with all colors represented. Regarding clarity, categories such as "I1" and "IF" have relatively few observations compared to others. With this, our exploratory data analysis step has provided valuable insights into the structure of the dataset and identify patterns among the features. We will now proceed with data pre-processing before implementing our machine learning algorithms.
@@ -207,7 +226,7 @@ In this paper, we will implement various machine learning algorithms to generate
 
 \subsection{Regression Models}
 
-We begin with the simplest algorithm: the Linear regression model. This algorithm fits a straight-line model between diamond prices and the aforementioned features. This initial model will help us gain intuition about the relationship between the features and diamond prices. Additionally, since our Exploratory Data Analysis (EDA) results indicating a potential quadratic relationship between price and carat \& diamond dimensions (x, y, z), we also implement a Polynomial Regression model and test its performance. Using 5-fold cross-validation, we test powers ranging from 1 to 5 to determine the optimal degree of our regression model. This allows us to identify whether more complex relationships in our data exist, capture nonlinear relationships, and assess whether Polynomial Regression outperforms traditional Linear Regression. After determining the optimal degree of our polynomial regression model, we will train the algorithm on the entire training dataset. Finally, we evaluate its performance on the test set to compare it with other algorithms.
+We begin with the simplest algorithm: the Linear regression model. This algorithm fits a straight-line model between diamond prices and the aforementioned features. This initial model will help us gain intuition about the relationship between the features and diamond prices. Additionally, since our results in \ref{fig:scatter} suggested a potential quadratic relationship between price and carat \& diamond dimensions (x, y, z), we also implement a Polynomial Regression model and test its performance. Using 5-fold cross-validation, we test powers ranging from 1 to 3 to determine the optimal degree of our regression model. This allows us to identify whether more complex relationships in our data exist, capture nonlinear relationships, and assess whether Polynomial Regression outperforms traditional Linear Regression. After determining the optimal degree of our polynomial regression model, we will train the algorithm on the entire training dataset. Finally, we evaluate its performance on the test set to compare it with other algorithms.
 
 \subsection{Decision Trees} 
 
@@ -375,7 +394,7 @@ Again, we employed a 5-fold cross-validation procedure with an extensive Grid Se
 
 \begin{table}[H]
 \centering
-\caption{Optimal Hyperparameter for Random Forests}
+\caption{Optimal Hyperparameter for Neural Networks}
 \begin{tabular}{|c|c|}
 \hline
 Hyperparameter & Optimal Value \\
@@ -396,11 +415,11 @@ Number of Neurons in Hidden Layer & 64 \\
 \label{tab:nn_hyper}
 \end{table}
 
-The grid search method presents in the architecture of our neural network model. Specifically, the neural network architecture consists of a single hidden layer with 64 neurons, a learning rate of 0.1 for the model convergence, RMSProp optimizer, and no dropout regularization. Note that for this paper, our search was limited on developing an artificial neural network with one hidden layer, and one may choose to add additional layers and deepen this network further. The number of epochs was determined to be 250. To illustrate the training and testing accuracy versus epoch, refer to the figure below.
+The grid search method presents the architecture of our neural network model. Specifically, the neural network architecture consists of a single hidden layer with 64 neurons, a learning rate of 0.1 for the model convergence, RMSProp optimizer, and no dropout regularization. Note that for this paper, our search was limited on developing an artificial neural network with one hidden layer, and one may choose to add additional layers and deepen this network further. The number of epochs was determined to be 250. To illustrate the training and testing accuracy versus epoch, refer to the figure below.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{1000.png} % Replace "example-image" with the filename of your image
+    \includegraphics[width=1\linewidth]{1000.png} % Replace "example-image" with the filename of your image
     \caption{Error (MSE) vs Number of Epochs: The figure depicts the training and testing errors as a function of the number of epochs (1000). Overfitting becomes apparent after Epoch 450, as shown by an increase in testing error while the training error remains low.}
     \label{fig:trn-tst-1000}
 \end{figure}
@@ -474,18 +493,13 @@ Overall, Random Forests and XGBoost emerged as the top performers, showcasing th
 
 \subsection{Potential for Future Efforts}
 
-Future research can build on these findings by incorporating a larger dataset to capture more diverse patterns and improve model generalization, conducting a more comprehensive grid search with a larger hyperparameter space to find optimal settings for models, particularly neural networks, and integrating additional features such as market trends, regional price variations, and other economic indicators to enhance model accuracy. Further optimization of neural network architectures, such as experimenting with deeper networks and different types of layers, could improve performance. Additionally, applying these models to other diamond datasets can validate their generalizability and robustness. By continuing to refine and expand upon the models and methodologies used in this study, the diamond industry can further enhance its pricing strategies and decision-making processes.
+Future research can build on these findings by incorporating a larger dataset to capture more diverse patterns and improve model generalization, conducting a more comprehensive grid search with a larger hyperparameter space to find optimal settings for models, particularly neural networks, and integrating additional features such as market trends, regional price variations, and other economic indicators to enhance model accuracy. Further optimization of neural network architectures, such as experimenting with deeper networks and different types of layers, could improve performance. Additionally, applying these models to other diamond datasets can validate their generalizability and overall robustness. We can continue to refine and expand upon the models and methodologies used in this study, and the diamond industry can further enhance its pricing strategies and decision-making processes.
 
 \section{Project Road-Map}
 
-Our project involves a regression-supervised learning task in the context of predicting the price of a diamond based on several different measures. Our dataset contains 53,940 observations and 9 columns (8 predictors and 1 response). The output variable “price” is continuous and has a range between \$326 to \$18,823. With this, our goal for this project is to create a machine-learning model using deep neural networks that can predict diamond prices as accurately as possible. The practical application of this project is quite significant, as an effective model can assist researchers and industry professionals in determining the value of diamonds in the market. 
-As a part of developing our machine learning pipeline, we will first begin with exploratory data analysis. We do not have any missing values present, so we don’t have to worry about any data imputation for this specific project. First, we will begin by plotting the distribution of our features to understand the spread of our data and account for potential skewness. Since outliers can have significant effects on the overall accuracy of machine learning models, we will look for them in our dataset and remove them. We will use various outlier detection techniques such as one-class SVM and through the IQR computation; we're still planning the specific details as to how we will approach this step. Furthermore, since we have 3 categorical variables, we will use one-hot encoding and label encoding (in the case of an ordinal column) to convert them into numeric columns. Ultimately, our goal with EDA is to clean the dataset and understand the relationship between the predictors and the response variable. In terms of timeline, we plan to dedicate the EDA portion of our dataset this week/early next week (~ 1/1.5 weeks) before we begin training the model. We aim to have this portion of the project completed before the quarter midpoint and begin the process of training the model as well.
+To conclude, our project involves a regression-supervised learning task to predict the price of a diamond based on several different features. Our machine learning pipeline involved several steps: (i) \textbf{Exploratory Data Analysis (EDA):} During the first three weeks, our group focused on the exploratory data analysis portion. This took about 3-4 weeks. We began by plotting the distribution of our features to understand the spread of our data and account for potential skewness. Since outliers can significantly affect the overall accuracy of machine learning models, we used various outlier detection techniques, including the IQR computation, to identify and remove them. Our group contributed equally to this component: Andrew and Yifan focused on outlier detection, while Aditya, Eshan, and Nandini worked on creating the plots. (ii) \textbf{Model Implementation:} During the next three weeks, we implemented various models. Aditya worked on implementing the decision tree models and performed the necessary grid search for hyperparameter tuning. Andrew and Yifan focused on the neural network and regression models. This process took about three weeks (weeks 4-8 of the quarter). This step was the most rigorous and time consuming, as we evaluated each of the models against one another and tested many variations of hyperparameter spaces to find the optimal set in our application. During this time, Aditya also began writing the final report to ensure we stayed on schedule. (iii) \textbf{Report Writing:} The paper was written over the course of the quarter, once model training was completed to some extent. In weeks 9-10, the team finished the paper together. (iv) \textbf{Final Touches:} During the final week, we implemented finishing touches on the project report and integrated the model weights into the project GUI. Nandini and Eshan handled the HTML connections. Overall, our project demonstrated the importance of accurate diamond price prediction and showcased the effective use of machine learning models in achieving this goal.
 
-Once EDA is complete, we are going to use deep neural networks to train a machine learning algorithm that will most accurately predict diamond prices. Neural networks are quite complex and include many hyper-parameters, so we want to explore several of them and see how they can help improve our results. In particular, we will begin by using K-fold cross-validation to train several neural networks of different sizes (with the number of layers and neurons varying) and compare the performance of each method in predicting diamond price. We will use the metrics learned in class, using total error and MSE as benchmarks for overall model performance. Furthermore, we are interested in exploring regularization techniques such as L2 regularization (possibly dropout/weight-decay on the learning rate as well, if time permits) to reduce overfitting and further improve the total error. Our goal is to produce the best model in terms of accuracy while also achieving a low training time; thus we will explore the implementation of different optimization techniques such as momentum SGD/RMSProp/Adam (choose one of three, likely momentum GD since we will be able to explain the concepts behind it clearly) to see how they affect our results in comparison to gradient descent. The details and concept of our optimization techniques will be included as part of the literature review section in the project report. Lastly, we may explore the effect of different activation functions (sigmoid/tanh) to see how the model performs in terms of accuracy and performance when non-linearity is introduced. Ultimately, our final goal is to develop a model such that we can get the best prediction accuracy on the generalized unseen data. 
-
-In conclusion, this project not only aims to give a precise price prediction but also to provide insight into what important factors influence diamond prices—specific factors that may be of high value to a consumer and seller of diamonds. Rigorous data analysis and model-tuning efforts will be put in place to realize a robust model that can help demystify the complexities behind diamond pricing. In terms of the specific methodologies learned in our class, this project will help us understand how changes in the neural network architecture and tuning of hyper-parameters can affect our overall results, including changes in key metrics such as model accuracy and overall training speed. 
-
-\emph{Group Contributions} The group had equal contributions throughout the course of this project. Andrew, Yifan, and Aditya focused on the model training and writing the paper. Nandini and Eshan worked on exploratory data analysis, setting up the Github repo, and creating the Project GUI environment for users. 
+\textbf{Group Contributions:} The group had equal contributions throughout the course of this project. Andrew, Yifan, and Aditya focused on the model training and writing the paper. Nandini and Eshan worked on exploratory data analysis, setting up the Github repo, and creating the Project GUI environment for users. Aditya remained in contact with the TA and professors to ensure the groups needs were met and all inquiries we resolved in a timely manner. 
 
 The \textbf{Github repository} for our project may be found here: https://github.com/adimittal03/ECS171-Final-Group21. 
 
@@ -514,7 +528,9 @@ The \textbf{Github repository} for our project may be found here: https://github
 \bibitem{Bottou} Bottou, L. (2010). Large-Scale Machine Learning with Stochastic Gradient Descent. In Proceedings of COMPSTAT'2010, Springer. DOI: 10.1007/978-3-7908-2604-3\_16
 \bibitem{Kingma} Kingma, D. P., \& Ba, J. (2015). Adam: A Method for Stochastic Optimization. In International Conference on Learning Representations (ICLR). URL: https://arxiv.org/abs/1412.6980
 \bibitem{Tieleman} Tieleman, T., \& Hinton, G. (2012). Lecture 6.5 - RMSProp: Divide the gradient by a running average of its recent magnitude. COURSERA: Neural Networks for Machine Learning. URL: https://www.cs.toronto.edu/~tijmen/csc321/slides/lecture\_slides\_lec6.pdf
+
 \end{thebibliography}
 \vspace{12pt}
+
 
 \end{document}
