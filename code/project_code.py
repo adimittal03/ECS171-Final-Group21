@@ -25,7 +25,7 @@ import joblib
 
 ### Exploratory Data Analysis
 ### ---------------------------------------------------------------------------------
-df = pd.read_csv("~/Desktop/Year_three/Spring_2024/ECS171/ECS171_Final/diamonds.csv") 
+df = pd.read_csv("../dataset/diamonds.csv") 
 df = df.iloc[:, 1:]  # remove index column          
 # df.head()
 
