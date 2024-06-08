@@ -35,7 +35,7 @@ scaler = joblib.load('scaler.joblib')
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('templates/index.html')
 
 @app.route('/result', methods=['POST'])
 def predict():
@@ -79,10 +79,10 @@ def predict():
             predictions['neural_network'] = "Model not available"
         
         # Return the predicted results to the user
-        return render_template("results.html", predictions=predictions)
+        return render_template("templates/results.html", predictions=predictions)
     except Exception as e:
         print("Error:", e)
-        return render_template("error.html")
+        return render_template("templates/error.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
